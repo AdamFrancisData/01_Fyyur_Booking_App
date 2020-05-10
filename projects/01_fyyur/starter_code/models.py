@@ -20,9 +20,10 @@ class Shared(db.Model):
     seeking_description = db.Column(db.String(120))
     image_link = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
+    website = db.Column(db.String(120))
 
-    def __repr__(self):
-        return '<{} {}>'.format(self.__name__, self.name)
+    # def __repr__(self):
+    #     return '<{} {}>'.format(self.__name__, self.name)
 
 class Venue(Shared):
     """
@@ -31,7 +32,7 @@ class Venue(Shared):
     __tablename__ = 'venue'
 
     address = db.Column(db.String(120))
-    shows = db.relationship('Show', backref='venue', lazy=True)
+    shows = db.relationship('Show', backref='venue', lazy=True,cascade="all, delete-orphan")
 
 
 class Artist(Shared):
@@ -54,5 +55,5 @@ class Show(db.Model):
     venue_id = db.Column(db.Integer, db.ForeignKey('venue.id'), nullable=False)
     start_time = db.Column(db.DateTime, nullable=False)
 
-    def __repr__(self):
-        return '<Artist {}>'.format(self.name)
+    # def __repr__(self):
+    #     return '<Artist {}>'.format(self.name)
